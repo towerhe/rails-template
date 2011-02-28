@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.0.4'
+gem 'rails', '3.0.5'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -9,7 +9,7 @@ gem 'mysql2'
 # gem 'sqlite3-ruby', :require => 'sqlite3'
 # gem 'moneta'
 
-gem 'yajl-ruby', :require => 'yajl'
+#gem 'yajl-ruby', :require => 'yajl'
 gem 'nokogiri'
 
 # Paginator
@@ -33,17 +33,18 @@ gem 'nokogiri'
 # gem 'hoptoad_notifier'
 # gem 'newrelic_rpm'
 
-gem 'SystemTimer'
+#gem 'SystemTimer'
 
 group :test, :development do
+  gem "cucumber-rails"
   gem "rspec", "~> 2.0"
   gem "rspec-rails", "~> 2.0"
   gem "factory_girl_rails"
-  gem "shoulda-matchers"
-  gem "rcov"
+  #gem "shoulda-matchers"
+  #gem "rcov"
   gem "delorean"
-  gem "watchr"
-  # gem "capybara"
+  #gem "watchr"
+  gem "capybara"
   # gem 'yard'
   # gem "bluecloth"
 end

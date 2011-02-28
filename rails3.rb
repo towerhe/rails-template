@@ -4,6 +4,12 @@ run "rm public/index.html"
 run "rm public/images/rails.png"
 run "cp config/database.yml config/database.yml.example"
 
+# remove git files
+run "rm .gitignore"
+run "rm public/stylesheets/.gitkeep"
+run "rm public/javascripts/.gitkeep"
+run "rm vendor/plugins/.gitkeep"
+
 # install gems
 run "rm Gemfile"
 file 'Gemfile', File.read("#{File.dirname(rails_template)}/Gemfile")
@@ -13,10 +19,11 @@ run "bundle install"
 
 # generate rspec
 generate "rspec:install"
+generate "cucumber:install --capybara"
 
 # copy files
-file 'script/watchr.rb', File.read("#{File.dirname(rails_template)}/watchr.rb")
-file 'lib/tasks/dev.rake', File.read("#{File.dirname(rails_template)}/dev.rake")
+#file 'script/watchr.rb', File.read("#{File.dirname(rails_template)}/watchr.rb")
+#file 'lib/tasks/dev.rake', File.read("#{File.dirname(rails_template)}/dev.rake")
 
 # remove active_resource and test_unit
 gsub_file 'config/application.rb', /require 'rails\/all'/, <<-CODE
@@ -24,6 +31,17 @@ gsub_file 'config/application.rb', /require 'rails\/all'/, <<-CODE
   require 'active_record/railtie'
   require 'action_controller/railtie'
   require 'action_mailer/railtie'
+CODE
+
+# config rspec
+gsub_file 'spec/spec_helper.rb', /require 'rspec\/rails'/, <<-CODE
+require 'rspec/rails'
+require 'capybara/rspec'
+CODE
+
+gsub_file 'spec/spec_helper.rb', /RSpec.configure do \|config\|/, <<-CODE
+Rspec.configure do |config|
+  config.include Delorean
 CODE
 
 # install jquery
@@ -37,6 +55,7 @@ gsub_file 'config/application.rb', /(config.action_view.javascript_expansions.*)
 environment 'Time::DATE_FORMATS.merge!(:default => "%Y/%m/%d %I:%M %p", :ymd => "%Y/%m/%d")'
 
 # .gitignore
+=begin
 append_file '.gitignore', <<-CODE
 config/database.yml
 Thumbs.db
@@ -55,3 +74,5 @@ git :add => '.'
 git :add => 'tmp/.gitkeep -f'
 git :add => 'log/.gitkeep -f'
 git :commit => "-a -m 'initial commit'"
+=end
+
