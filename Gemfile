@@ -36,6 +36,7 @@ gem 'nokogiri'
 #gem 'SystemTimer'
 
 group :test, :development do
+  gem "webrat"
   gem "cucumber-rails"
   gem "rspec", "~> 2.0"
   gem "rspec-rails", "~> 2.0"
