@@ -4,12 +4,6 @@ run "rm public/index.html"
 run "rm public/images/rails.png"
 run "cp config/database.yml config/database.yml.example"
 
-# remove git files
-run "rm .gitignore"
-run "rm public/stylesheets/.gitkeep"
-run "rm public/javascripts/.gitkeep"
-run "rm vendor/plugins/.gitkeep"
-
 # install gems
 run "rm Gemfile"
 file 'Gemfile', File.read("#{File.dirname(rails_template)}/Gemfile")
@@ -19,11 +13,12 @@ run "bundle install"
 
 # generate rspec
 generate "rspec:install"
-generate "cucumber:install --capybara"
+generate "cucumber:install --capybara --rspec --spork"
 
 # copy files
-#file 'script/watchr.rb', File.read("#{File.dirname(rails_template)}/watchr.rb")
-#file 'lib/tasks/dev.rake', File.read("#{File.dirname(rails_template)}/dev.rake")
+file 'Guardfile', File.read("#{File.dirname(rails_template)}/Guardfile")
+run "rm spec/spec_helper.rb"
+file 'spec/spec_helper.rb', File.read("#{File.dirname(rails_template)}/spec_helper.rb")
 
 # remove active_resource and test_unit
 gsub_file 'config/application.rb', /require 'rails\/all'/, <<-CODE
@@ -33,15 +28,9 @@ gsub_file 'config/application.rb', /require 'rails\/all'/, <<-CODE
   require 'action_mailer/railtie'
 CODE
 
-# config rspec
-gsub_file 'spec/spec_helper.rb', /require 'rspec\/rails'/, <<-CODE
-require 'rspec/rails'
-require 'capybara/rspec'
-CODE
-
-gsub_file 'spec/spec_helper.rb', /RSpec.configure do \|config\|/, <<-CODE
-Rspec.configure do |config|
-  config.include Delorean
+gsub_file 'Rakefile', /require 'rake'/, <<-CODE
+  require 'rake'
+  require 'rake/dsl'
 CODE
 
 # install jquery
@@ -53,26 +42,4 @@ gsub_file 'config/application.rb', /(config.action_view.javascript_expansions.*)
 
 # add time format
 environment 'Time::DATE_FORMATS.merge!(:default => "%Y/%m/%d %I:%M %p", :ymd => "%Y/%m/%d")'
-
-# .gitignore
-=begin
-append_file '.gitignore', <<-CODE
-config/database.yml
-Thumbs.db
-.DS_Store
-tmp/*
-coverage/*
-CODE
-
-# keep tmp and log
-run "touch tmp/.gitkeep"
-run "touch log/.gitkeep"
-
-# git commit
-git :init
-git :add => '.'
-git :add => 'tmp/.gitkeep -f'
-git :add => 'log/.gitkeep -f'
-git :commit => "-a -m 'initial commit'"
-=end
 

@@ -1,15 +1,15 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.0.5'
+gem 'rails', '3.0.7'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'mysql2'
+gem 'mysql2', '~> 0.2.7'
 # gem 'sqlite3-ruby', :require => 'sqlite3'
 # gem 'moneta'
 
-#gem 'yajl-ruby', :require => 'yajl'
+gem 'yajl-ruby', :require => 'yajl'
 gem 'nokogiri'
 
 # Paginator
@@ -29,25 +29,31 @@ gem 'nokogiri'
 # gem "haml-rails"
 # gem 'validates_timeliness', '~> 3.0.5'
 # gem 'acts-as-taggable-on'
- 
+
 # gem 'hoptoad_notifier'
 # gem 'newrelic_rpm'
 
 #gem 'SystemTimer'
 
 group :test, :development do
-  gem "webrat"
-  gem "cucumber-rails"
-  gem "rspec", "~> 2.0"
-  gem "rspec-rails", "~> 2.0"
+  gem 'capybara'
+  gem "rspec-rails"
+  gem 'cucumber-rails'
+  gem 'spork', '~> 0.9.0.rc8'
   gem "factory_girl_rails"
-  #gem "shoulda-matchers"
-  #gem "rcov"
-  gem "delorean"
+  gem 'delorean'
   #gem "watchr"
-  gem "capybara"
-  # gem 'yard'
-  # gem "bluecloth"
+  #gem 'launchy'
+end
+
+group :test do
+  gem 'database_cleaner'
+  gem 'rb-inotify'
+  gem 'libnotify'
+  gem "guard-bundler"
+  gem "guard-rspec"
+  gem "guard-cucumber"
+  gem "guard-spork"
 end
 
 # State machine
