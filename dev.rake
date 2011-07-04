@@ -1,4 +1,4 @@
-APP_NAME = Rails.root.split(/\//).last
+APP_NAME = Rails.root.to_s.split(/\//).last
 PKG_DIR = File.join(Rails.root, 'pkg')
 VERSION = File.exist?('VERSION') ? File.read('VERSION').strip : ""
 
