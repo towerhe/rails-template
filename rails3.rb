@@ -19,18 +19,14 @@ generate "cucumber:install --capybara --rspec --spork"
 file 'Guardfile', File.read("#{File.dirname(rails_template)}/Guardfile")
 run "rm spec/spec_helper.rb"
 file 'spec/spec_helper.rb', File.read("#{File.dirname(rails_template)}/spec_helper.rb")
+file 'lib/tasks/dev.rake', File.read("#{File.dirname(rails_template)}/dev.rake")
 
 # remove active_resource and test_unit
 gsub_file 'config/application.rb', /require 'rails\/all'/, <<-CODE
-  require 'rails'
-  require 'active_record/railtie'
-  require 'action_controller/railtie'
-  require 'action_mailer/railtie'
-CODE
-
-gsub_file 'Rakefile', /require 'rake'/, <<-CODE
-  require 'rake'
-  require 'rake/dsl'
+require 'rails'
+require 'active_record/railtie'
+require 'action_controller/railtie'
+require 'action_mailer/railtie'
 CODE
 
 # install jquery
