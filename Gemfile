@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.0.7'
+gem 'rails', '>= 3.0.0', '< 3.1.0'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -35,18 +35,17 @@ gem 'nokogiri'
 
 #gem 'SystemTimer'
 
-group :test, :development do
-  gem 'capybara'
-  gem "rspec-rails"
+group :development, :test do
+  gem "capybara"
   gem 'cucumber-rails'
-  gem 'spork', '~> 0.9.0.rc8'
-  gem "factory_girl_rails"
-  gem 'delorean'
-  #gem "watchr"
-  #gem 'launchy'
+  gem 'factory_girl_rails'
+  gem 'spork', '0.9.0.rc8'
+  gem "delorean"
 end
 
 group :test do
+  gem "rspec-rails"
+  gem 'shoulda-matchers'
   gem 'database_cleaner'
   gem 'rb-inotify'
   gem 'libnotify'
