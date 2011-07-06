@@ -29,6 +29,7 @@ gem 'nokogiri'
 # gem "haml-rails"
 # gem 'validates_timeliness', '~> 3.0.5'
 # gem 'acts-as-taggable-on'
+gem 'acts_as_api'
 
 # gem 'hoptoad_notifier'
 # gem 'newrelic_rpm'
