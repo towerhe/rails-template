@@ -13,11 +13,30 @@ run "bundle install"
 
 # generate rspec
 generate "rspec:install"
+gsub_file '.rspec', /--colour/, <<-CODE
+--colour
+--drb
+--format doc
+CODE
+
 generate "cucumber:install --capybara --rspec --spork"
 
 # configure cucumber
 run "rm config/cucumber.yml"
 file "config/cucumber.yml", File.read("#{File.dirname(rails_template)}/resources/config/cucumber.yml")
+gsub_file 'features/support/env.rb', /Spork.prefork do\n  require 'cucumber\/rails'\n\n/, <<-CODE
+Spork.prefork do
+  require 'cucumber/rails'
+
+  # Clean database
+  DatabaseCleaner.clean_with(:truncation)
+
+  # Setup factory_girl
+  require 'factory_girl'
+  Dir.glob(File.join(File.dirname(__FILE__), '../../spec/factories/*.rb')).each {|f| require f }
+CODE
+
+gsub_file 'features/support/env.rb', /DatabaseCleaner\.strategy = :transaction/, 'DatabaseCleaner.strategy = :truncation'
 
 # copy files
 file 'Guardfile', File.read("#{File.dirname(rails_template)}/resources/Guardfile")
