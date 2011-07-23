@@ -15,7 +15,7 @@ group 'backend' do
     watch(%r{^spec/factories/.+\.rb$})
   end
 
-  guard 'rspec' do
+  guard 'rspec', :cli => '--color --format doc' do
     watch('spec/spec_helper.rb')                       { "spec" }
     watch('config/routes.rb')                          { "spec/routing" }
     watch('app/controllers/application_controller.rb') { "spec/controllers" }
