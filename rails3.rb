@@ -52,6 +52,15 @@ require 'action_controller/railtie'
 require 'action_mailer/railtie'
 CODE
 
+# ci_reporter
+gsub_file 'Rakefile', /require 'rake'/, <<-CODE
+require 'rake'
+
+require 'rubygems'
+require 'ci/reporter/rake/rspec'     # use this if you're using RSpec
+require 'ci/reporter/rake/cucumber'  # use this if you're using Cucumber
+CODE
+
 # install jquery
 run "curl -L http://code.jquery.com/jquery.min.js > public/javascripts/jquery.js"
 run "curl -L http://github.com/rails/jquery-ujs/raw/master/src/rails.js > public/javascripts/rails.js"
