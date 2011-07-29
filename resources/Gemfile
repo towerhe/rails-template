@@ -44,9 +44,13 @@ group :development, :test do
   gem 'spork', '0.9.0.rc9'
   gem "delorean"
   gem 'rails_best_practices'
+  gem 'rack-webconsole'
+  gem 'ci_reporter'
 end
 
 group :test do
+  gem 'simplecov', :require => false
+  gem 'simplecov-rcov', :require => false
   gem 'shoulda-matchers'
   gem 'database_cleaner'
   gem 'rb-inotify'
